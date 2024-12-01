@@ -2,6 +2,7 @@ package com.apple.shop;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,13 +41,16 @@ public class ItemController {
 
   @GetMapping("/detail/{id}")
   public String detail(@PathVariable Long id, Model model) {
-    Optional<Item> result = itemRepository.findById(id);
-    if (result.isPresent()) {
-      model.addAttribute("data", result.get());
-      return "detail.html";
 
-    } else {
-      return "rediret:/list";
-    }
+
+      Optional<Item> result = itemRepository.findById(id);
+      if (result.isPresent()) {
+        model.addAttribute("data", result.get());
+        return "detail.html";
+
+      } else {
+        return "redirect:/list";
+      }
   }
+
 }
